@@ -1,0 +1,51 @@
+<header class="bg-white border-b">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <!-- left: logo + menu -->
+      <div class="flex items-center gap-4">
+        <a routerLink="/" class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-pink-500 rounded-md flex items-center justify-center text-white font-bold"
+          >
+            BI
+          </div>
+          <div class="hidden sm:block">
+            <div class="text-lg font-semibold">Bold Inkline</div>
+            <div class="text-xs text-gray-500">Bookshell Pro</div>
+          </div>
+        </a>
+
+        <!-- simple top nav links (hidden on xs) -->
+        <nav class="hidden lg:flex items-center gap-2 ml-6">
+          <a routerLink="/books" class="px-3 py-1 text-sm rounded hover:bg-gray-100">Books</a>
+          <a routerLink="/dashboard" class="px-3 py-1 text-sm rounded hover:bg-gray-100"
+            >Dashboard</a
+          >
+          <a routerLink="/reports" class="px-3 py-1 text-sm rounded hover:bg-gray-100">Reports</a>
+        </nav>
+      </div>
+
+      <!-- right: actions / profile -->
+      <div class="flex items-center gap-3">
+        <button
+          class="hidden md:inline-flex items-center px-3 py-2 rounded bg-indigo-50 text-indigo-600 text-sm"
+        >
+          New Book
+        </button>
+
+        <!-- profile menu -->
+        <div class="relative">
+          <button mat-button [matMenuTriggerFor]="profileMenu" class="flex items-center gap-2">
+            <img src="https://i.pravatar.cc/40" alt="avatar" class="w-8 h-8 rounded-full border" />
+            <span class="hidden md:inline-block text-sm">Ezzedin</span>
+          </button>
+
+          <mat-menu #profileMenu="matMenu">
+            <button mat-menu-item (click)="navigateToProfile()">Profile</button>
+            <button mat-menu-item (click)="onLogout()">Logout</button>
+          </mat-menu>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
