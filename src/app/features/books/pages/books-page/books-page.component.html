@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-6">
+  <div class="flex items-center justify-between">
+    <h2 class="text-2xl font-semibold">Books</h2>
+    <div class="flex gap-2 items-center">
+      <button class="px-3 py-2 rounded bg-indigo-600 text-white">Import</button>
+      <button class="px-3 py-2 rounded border">Export</button>
+    </div>
+  </div>
+
+  <!-- search -->
+  <app-books-search [control]="searchControl"></app-books-search>
+
+  <!-- loading skeleton -->
+  <div
+    *ngIf="loading()"
+    class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+  >
+    <div *ngFor="let n of skeletonCount" class="animate-pulse bg-white rounded-lg h-36 p-4"></div>
+  </div>
+
+  <!-- grid -->
+  <app-books-grid [books]="books()" (edit)="onEdit($event)" (delete)="onDelete($event)">
+  </app-books-grid>
+</div>

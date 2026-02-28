@@ -1,0 +1,15 @@
+<div class="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <ng-container *ngIf="books?.length; else empty">
+    <app-book-card
+      *ngFor="let b of books; trackBy: trackById"
+      [book]="b"
+      (edit)="edit.emit($event)"
+      (delete)="delete.emit($event)"
+    >
+    </app-book-card>
+  </ng-container>
+</div>
+
+<ng-template #empty>
+  <div class="text-center text-gray-500 py-8">No books found</div>
+</ng-template>

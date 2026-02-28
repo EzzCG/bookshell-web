@@ -1,0 +1,18 @@
+<div class="bg-white p-4 rounded-lg shadow-sm flex flex-col justify-between h-full">
+  <div>
+    <h3 class="text-lg font-semibold">{{ book.title }}</h3>
+    <p class="text-sm text-gray-500">{{ book.author }}</p>
+    <p class="text-xs text-gray-400 mt-2">{{ book.year ?? '—' }}</p>
+    <p *ngIf="book.description" class="mt-2 text-sm text-gray-600">{{ book.description }}</p>
+  </div>
+
+  <div class="mt-4 flex items-center justify-between">
+    <div class="text-xs text-gray-500">ID: {{ book.id }}</div>
+    <div class="flex gap-2">
+      <button (click)="edit.emit(book)" class="px-2 py-1 text-sm border rounded">Edit</button>
+      <button (click)="delete.emit(book)" class="px-2 py-1 text-sm border rounded text-red-600">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>

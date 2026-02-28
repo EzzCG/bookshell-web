@@ -5,8 +5,8 @@ export const routes: Routes = [
   {
     path: 'books',
     loadComponent: () =>
-      import('./features/books/pages/books-list/books-list').then((m) => m.BooksList),
-    canActivate: [authGuard],
+      import('./features/books/pages/books-page/books-page.component').then((m) => m.BooksPage),
+    // canActivate: [authGuard],
   },
   {
     path: 'login',
