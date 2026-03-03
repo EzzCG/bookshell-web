@@ -1,12 +1,17 @@
-import { Component, effect, signal, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged, switchMap, tap, of, catchError, map } from 'rxjs';
 import { Book } from '../../models/book';
 import { BooksGrid } from '../../components/books-grid/books-grid.component';
 import { BooksSearch } from '../../components/books-search/books-search.component';
-import { BooksService } from '../../services/book.service';
+import { Store } from '@ngrx/store';
+import {
+  selectBooks,
+  selectBooksSearchState,
+  selectLoading,
+} from '../../../../state/books/books.selectors';
+import { BooksPageActions } from '../../../../state/books/books.actions';
 
 @Component({
   standalone: true,
@@ -16,58 +21,26 @@ import { BooksService } from '../../services/book.service';
   styleUrl: './books-page.component.scss',
 })
 export class BooksPage {
-  // private service = inject(MockBooksService);
-  private service = inject(BooksService);
+  // private service = inject(BooksService);
+  private store = inject(Store);
+
   searchControl = new FormControl('', { nonNullable: true });
-  loading = signal(false);
-  books = signal<Book[] | null>(null);
+
+  loading$ = this.store.select(selectLoading);
+  books$ = this.store.select(selectBooks);
+
   skeletonCount = Array.from({ length: 8 }); // Creates an array [undefined, undefined, ..., undefined] of length 8 for skeleton placeholders
 
   constructor() {
     // initial load
-    this.load('');
+    this.store.dispatch(BooksPageActions.enter({ initialQuery: '' }));
 
     // subscribe to search with debounce + cancel
-    this.searchControl.valueChanges
-      .pipe(
-        takeUntilDestroyed(),
-        debounceTime(300),
-        map((searchString) => searchString.trim().toLowerCase()),
-        distinctUntilChanged(),
-        tap(() => this.loading.set(true)),
-        switchMap((q: string) =>
-          this.service.search(q).pipe(
-            catchError(() => of([])), // fallback to empty on error
-          ),
-        ),
-      )
-      .subscribe((list) => {
-        this.books.set(list);
-        this.loading.set(false);
-      });
-
-    // optional reactive side-effect: whenever books change, log count (example of effect + signals)
-    effect(() => {
-      const current = this.books();
-      console.debug('[BooksPage] books length', current?.length ?? 0);
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      this.store.dispatch(BooksPageActions.queryChanged({ query: value }));
     });
-  }
 
-  private load(q: string) {
-    this.loading.set(true);
-    this.service
-      .search(q)
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: (list) => {
-          this.books.set(list);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.books.set([]);
-          this.loading.set(false);
-        },
-      });
+    this.store.subscribe((state) => console.log('ROOT STATE', state));
   }
 
   onEdit(book: Book) {

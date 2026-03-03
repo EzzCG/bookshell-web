@@ -10,6 +10,10 @@ import { environment } from '../../../../environments/environment.prod';
 const BOOKS_CACHE_PREFIX = 'books:';
 const BOOK_GET_PREFIX = 'book:';
 
+export function booksCacheKey(q?: string) {
+  return `${BOOKS_CACHE_PREFIX}${(q ?? '').trim().toLowerCase() || '__all'}`;
+}
+
 @Injectable({ providedIn: 'root' })
 export class BooksService {
   private http = inject(HttpTypedClient);
@@ -18,7 +22,7 @@ export class BooksService {
 
   /** Search books (cached per query). */
   search(q?: string): Observable<Book[]> {
-    const key = `${BOOKS_CACHE_PREFIX}${(q ?? '').trim().toLowerCase() || '__all'}`;
+    const key = booksCacheKey(q);
 
     return this.cache.getOrLoad<Book[]>(key, () => {
       // create params

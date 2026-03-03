@@ -12,13 +12,13 @@
 
   <!-- loading skeleton -->
   <div
-    *ngIf="loading()"
+    *ngIf="loading$ | async"
     class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
   >
     <div *ngFor="let n of skeletonCount" class="animate-pulse bg-white rounded-lg h-36 p-4"></div>
   </div>
 
   <!-- grid -->
-  <app-books-grid [books]="books()" (edit)="onEdit($event)" (delete)="onDelete($event)">
+  <app-books-grid [books]="books$ | async" (edit)="onEdit($event)" (delete)="onDelete($event)">
   </app-books-grid>
 </div>
