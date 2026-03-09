@@ -1,16 +1,62 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { booksSearchFeatureKey, BooksSearchState } from './books.reducer';
+import { booksFeatureKey, BookState } from './books.reducer';
 
-export const selectBooksSearchState =
-  createFeatureSelector<BooksSearchState>(booksSearchFeatureKey);
+export const selectBooksState = createFeatureSelector<BookState>(booksFeatureKey);
 
-export const selectQuery = createSelector(selectBooksSearchState, (s) => s.query as string);
+export const selectQuery = createSelector(selectBooksState, (state) => state.query);
 
-export const selectBooks = createSelector(
-  selectBooksSearchState,
-  (s) => s.books, // Book[] | null
+export const selectBooks = createSelector(selectBooksState, (state) => state.books ?? []);
+
+export const selectBooksOrNull = createSelector(selectBooksState, (state) => state.books);
+
+export const selectLoading = createSelector(selectBooksState, (state) => state.loading);
+
+export const selectError = createSelector(selectBooksState, (state) => state.error);
+
+export const selectSelectedBook = createSelector(selectBooksState, (state) => state.selectedBook);
+
+export const selectSelectedBookLoading = createSelector(
+  selectBooksState,
+  (state) => state.selectedBookLoading,
 );
 
-export const selectLoading = createSelector(selectBooksSearchState, (s) => s.loading as boolean);
+export const selectSelectedBookError = createSelector(
+  selectBooksState,
+  (state) => state.selectedBookError,
+);
 
-export const selectError = createSelector(selectBooksSearchState, (s) => s.error);
+export const selectCreating = createSelector(selectBooksState, (state) => state.creating);
+
+export const selectUpdating = createSelector(selectBooksState, (state) => state.updating);
+
+export const selectDeleting = createSelector(selectBooksState, (state) => state.deleting);
+
+export const selectMutationError = createSelector(selectBooksState, (state) => state.mutationError);
+
+export const selectSaving = createSelector(
+  selectCreating,
+  selectUpdating,
+  (creating, updating) => creating || updating,
+);
+
+export const selectVm = createSelector(
+  selectBooks,
+  selectLoading,
+  selectQuery,
+  selectSelectedBook,
+  selectSelectedBookLoading,
+  selectCreating,
+  selectUpdating,
+  selectDeleting,
+  (books, loading, query, selectedBook, selectedBookLoading, creating, updating, deleting) => ({
+    books,
+    loading,
+    query,
+    selectedBook,
+    selectedBookLoading,
+    creating,
+    updating,
+    deleting,
+    saving: creating || updating,
+  }),
+);

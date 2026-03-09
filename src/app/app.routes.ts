@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
+// import { authGuard } from './core/guards/auth.guard';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { BooksSearchEffects } from './state/books/books.effects';
-import { booksSearchFeatureKey, booksSearchReducer } from './state/books/books.reducer';
+import { booksFeatureKey, booksSearchReducer } from './state/books/books.reducer';
 
 export const routes: Routes = [
   {
@@ -12,7 +12,7 @@ export const routes: Routes = [
       import('./features/books/pages/books-page/books-page.component').then((m) => m.BooksPage),
     // canActivate: [authGuard],
     providers: [
-      provideState(booksSearchFeatureKey, booksSearchReducer),
+      provideState(booksFeatureKey, booksSearchReducer),
       provideEffects(BooksSearchEffects),
     ],
   },
