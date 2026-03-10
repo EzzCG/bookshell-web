@@ -1,0 +1,72 @@
+<section class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+  <div class="flex items-center justify-between">
+    <h2 class="text-xl font-semibold">Reserved Books</h2>
+
+    <button type="button" (click)="addItem()" class="rounded-lg bg-indigo-600 px-4 py-2 text-white">
+      + Add Book
+    </button>
+  </div>
+
+  <div class="space-y-4">
+    <div
+      *ngFor="let item of items.controls; let i = index"
+      [formGroup]="$any(item)"
+      class="rounded-xl border bg-gray-50 p-4 space-y-4"
+    >
+      <div class="flex items-center justify-between">
+        <h3 class="font-medium">Book Item #{{ i + 1 }}</h3>
+
+        <button type="button" (click)="removeItem(i)" class="text-sm text-red-600">Remove</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="relative md:col-span-2">
+          <label class="block text-sm font-medium mb-1">Book Search</label>
+
+          <app-books-search [control]="$any(item.get('bookSearch'))"></app-books-search>
+
+          <div
+            *ngIf="bookSuggestions[i]?.length"
+            class="absolute z-10 mt-2 w-full rounded-lg border bg-white shadow-lg max-h-60 overflow-auto"
+          >
+            <button
+              type="button"
+              *ngFor="let book of bookSuggestions[i]"
+              (click)="selectBook(i, book)"
+              class="block w-full text-left px-3 py-2 hover:bg-gray-100"
+            >
+              <div class="font-medium">{{ book.title }}</div>
+              <div class="text-xs text-gray-500">{{ book.author }}</div>
+            </button>
+          </div>
+
+          <p
+            *ngIf="item.get('bookId')?.touched && item.get('bookId')?.invalid"
+            class="text-sm text-red-600 mt-1"
+          >
+            Please select a valid book from the search list
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Quantity</label>
+          <input
+            type="number"
+            formControlName="quantity"
+            class="w-full rounded-lg border px-3 py-2"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Days</label>
+          <input type="number" formControlName="days" class="w-full rounded-lg border px-3 py-2" />
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium mb-1">Comment</label>
+          <input type="text" formControlName="comment" class="w-full rounded-lg border px-3 py-2" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

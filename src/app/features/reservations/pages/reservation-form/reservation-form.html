@@ -1,0 +1,19 @@
+<form [formGroup]="reservationForm" (ngSubmit)="submit()" class="max-w-5xl mx-auto space-y-6">
+  <app-client-section [group]="clientGroup"></app-client-section>
+
+  <app-reservation-details [group]="reservationDetailsGroup"></app-reservation-details>
+
+  <app-reservation-items
+    [items]="items"
+    [bookSuggestions]="bookSuggestions()"
+    (addItemClicked)="addItem()"
+    (removeItemClicked)="removeItem($event)"
+    (bookSelected)="onBookSelected($event)"
+  ></app-reservation-items>
+
+  <div class="flex justify-end">
+    <button type="submit" class="rounded-lg bg-green-600 px-6 py-3 text-white font-medium">
+      Create Reservation
+    </button>
+  </div>
+</form>

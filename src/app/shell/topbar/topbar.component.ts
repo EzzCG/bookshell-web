@@ -24,4 +24,7 @@ export class TopbarComponent {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+  onReservation() {
+    this.router.navigate(['/reservations/new']);
+  }
 }
