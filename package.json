@@ -48,6 +48,7 @@
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
     "@angular/material": "^21.1.4",
+    "@angular/platform-browser-dynamic": "^21.1.4",
     "@ngrx/effects": "^21.0.1",
     "@ngrx/entity": "^21.0.1",
     "@ngrx/eslint-plugin": "^21.0.1",
@@ -62,6 +63,7 @@
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.50.1",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "zone.js": "^0.16.1"
   }
 }
