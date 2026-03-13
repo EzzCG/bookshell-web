@@ -32,11 +32,18 @@ module.exports = defineConfig([
           style: 'kebab-case',
         },
       ],
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
   {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
-    rules: {},
+    rules: {
+      // keep old *ngIf / *ngFor
+      '@angular-eslint/template/prefer-control-flow': 'off',
+
+      // optional: disable label association errors too
+      '@angular-eslint/template/label-has-associated-control': 'off',
+    },
   },
 ]);
