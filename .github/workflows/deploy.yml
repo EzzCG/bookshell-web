@@ -70,4 +70,5 @@ jobs:
       - name: Simulate deploy
         run: |
           echo "Deploying $APP_NAME to $DEPLOY_TARGET"
+          echo "Deploy_Token - $DEPLOY_TOKEN"
           echo "This is where the real hosting command will go."
