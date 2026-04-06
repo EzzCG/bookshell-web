@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientSectionComponent } from './client-section';
+import { FormControl, FormGroup } from '@angular/forms';
 
 describe('ClientSectionComponent', () => {
   let component: ClientSectionComponent;
@@ -13,6 +14,13 @@ describe('ClientSectionComponent', () => {
 
     fixture = TestBed.createComponent(ClientSectionComponent);
     component = fixture.componentInstance;
+
+    component.group = new FormGroup({
+      name: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
+    });
+
     await fixture.whenStable();
   });
 
