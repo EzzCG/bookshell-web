@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideState } from '@ngrx/store';
 import { BooksSearchEffects } from './state/books/books.effects';
-import { booksFeatureKey, booksSearchReducer } from './state/books/books.reducer';
+import { booksFeatureKey, booksReducer } from './state/books/books.reducer';
 
 export const routes: Routes = [
   {
@@ -11,10 +11,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/books/pages/books-page/books-page.component').then((m) => m.BooksPage),
     // canActivate: [authGuard],
-    providers: [
-      provideState(booksFeatureKey, booksSearchReducer),
-      provideEffects(BooksSearchEffects),
-    ],
+    providers: [provideState(booksFeatureKey, booksReducer), provideEffects(BooksSearchEffects)],
   },
   {
     path: 'login',
