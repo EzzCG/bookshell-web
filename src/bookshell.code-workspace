@@ -1,10 +1,12 @@
 {
   "folders": [
     {
-      "path": "..",
+      "name": "bookshell-api",
+      "path": "../../bookshell-api",
     },
     {
-      "path": "../../bookshell-api",
+      "name": "bookshell-web",
+      "path": "..",
     },
   ],
   "settings": {},
