@@ -53,7 +53,7 @@ function removeBookFromList(books: Book[] | null, id: string): Book[] | null {
   return books.filter((b) => b.id !== id);
 }
 
-export const booksSearchReducer = createReducer(
+export const booksReducer = createReducer(
   initialState,
 
   on(BooksPageActions.enter, (state, { initialQuery }) => ({
