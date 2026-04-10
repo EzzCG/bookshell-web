@@ -6,7 +6,7 @@ import { Book } from '../../models/book';
 import { BooksGrid } from '../../components/books-grid/books-grid.component';
 import { BooksSearch } from '../../components/books-search/books-search.component';
 import { BooksFacade } from '../../../../state/books/books.facade';
-import { Apollo, gql } from 'apollo-angular';
+// import { Apollo, gql } from 'apollo-angular';
 // import { map } from 'rxjs';
 
 // const GET_BOOKS = gql`
@@ -30,7 +30,7 @@ import { Apollo, gql } from 'apollo-angular';
 export class BooksPage {
   // private service = inject(BooksService);
   private booksFacade = inject(BooksFacade);
-  private apollo = inject(Apollo);
+  // private apollo = inject(Apollo);
 
   searchControl = new FormControl('', { nonNullable: true });
 
